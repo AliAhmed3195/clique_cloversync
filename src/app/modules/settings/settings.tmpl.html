@@ -1,0 +1,251 @@
+<style>
+
+    .contentdemoBasicUsage div.demo-content {
+      height: 450px; }
+    
+    .contentdemoBasicUsage div[ng-controller] {
+      height: 100%;
+      padding-bottom: 15px; }
+    
+    .contentdemoBasicUsage md-content {
+      padding: 24px; }
+    
+.listdemoListControls{
+  background-color: white;
+}
+
+    .listdemoListControls md-divider {
+      margin-top: 0;
+      margin-bottom: 0; }
+    
+    .listdemoListControls md-list {
+      padding-top: 0; 
+      width:98%;
+      
+    }
+    .listdemoListControls md-list-item {
+        border-bottom:1px solid #ccc;
+    }
+    .listdemoListControls md-list-item > p,
+    .listdemoListControls md-list-item > .md-list-item-inner > p,
+    .listdemoListControls md-list-item .md-list-item-inner > p,
+    .listdemoListControls md-list-item .md-list-item-inner > .md-list-item-inner > p {
+      -webkit-user-select: none;
+      /* Chrome all / Safari all */
+      -moz-user-select: none;
+      /* Firefox all */
+      -ms-user-select: none;
+      /* IE 10+ */
+      user-select: none;
+      /* Likely future */
+    
+      font-size:18px;
+    }
+    
+    </style>  
+   
+    <div ng-show="vm.isInvoiceLoaded " class="loader padding-100" layout="column" layout-fill=""
+    layout-align="center center">
+    <md-progress-linear class="margin-bottom-20" md-mode="indeterminate" ng-show="vm.isInvoiceLoaded && vm.ispageloaded">
+    </md-progress-linear>
+</div>     
+
+
+    <div layout="column" ng-cloak class="contentdemoBasicUsage" ng-hide="vm.isInvoiceLoaded && vm.ispageloaded">
+      <md-toolbar class="">
+        <div class="md-toolbar-tools" style="background:#26A7DE">
+          <h2 class="md-flex">Clover</h2>
+        </div>
+      </md-toolbar>
+      </div>
+    <!-- <md-progress-linear md-mode="indeterminate" ng-show="showProgress"></md-progress-linear>
+     -->
+     <div layout="column" style="padding: 15px;" ng-hide="vm.isInvoiceLoaded && vm.ispageloaded">
+    <md-card>
+      <md-content flex layout-padding class="listdemoListControls" style="background-color: white; overflow: hidden;">
+        <p style="min-width:700px;">&nbsp;</p>
+        <md-list>
+          <!-- <md-subheader ng-show="showErrorMessage"><p class="md-subtitle" style="color:red;font-size:16px;">{{errorMessage}}</p>
+        </md-subheader> -->
+          <md-list-item  class="noright" ng-disabled="false" style="padding-bottom: 20px;">
+            <img alt="{{ erp.name }}" ng-src="assets/images/icons/clover.jpg" class="md-avatar" style="width: 120px;" />
+            <p></p>
+            <!-- <div layout="row" layout-align="end end"> -->
+            <md-button class="md-primary md-raised cyan-500-bg" style="text-transform:none !important"
+                ng-show = "vm.activeclover == false " ng-click="vm.openErpConnectDialog()">
+                Connect to
+            </md-button>
+    
+            <md-button class="md-primary md-raised red-500-bg" style="text-transform:none !important"
+                ng-show = "vm.activeclover == true" ng-click="vm.cloverdisconnect()">
+                Disconnect 
+            </md-button>
+        <!-- </div> -->
+          </md-list-item>
+        </md-list>
+        </md-content>
+
+       
+<br>
+<style>
+    .container {
+  margin: 0 auto;
+  width: 60%;
+  text-align: center;
+}
+.container:after { /* this is the border */
+  content:"";
+  display:block;
+  width: 6em;
+  max-width:100%;
+  border-bottom: 0.3em solid black;
+  margin: 2em auto 0;
+}
+</style>
+<div layout="row" >
+    <div flex="40">
+            <!-- <label >From Date</label> -->
+        <md-datepicker   ng-model="vm.fromDate "   ng-change="setsDatetxndate(vm.fromDate);" md-placeholder="From date">
+            </md-datepicker>
+        </div>
+
+        <div flex="40">
+                <!-- <label >To Date</label> -->
+             <md-datepicker  ng-model="vm.toDate " md-placeholder="To date"  ng-change=" setsDateDueDate(vm.toDate);">
+            </md-datepicker>
+        </div>
+        <div flex="10">
+                <md-button class="md-primary md-raised red-500-bg" style="text-transform:none !important; margin-left:0px"
+                ng-click="vm.cloversyncDate()">
+                Sync 
+            </md-button>
+        </div>
+
+        </div>
+<hr>
+    </hr>
+        <br>
+
+        <md-card style="padding:25px; box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px; background-color: white;">
+     
+<!-- <div  Layout="row" style="font-size: 15px; font-weight: 500;"> Datetime</div> -->
+<div Layout="row"   >
+            <md-autocomplete  flex = "50" id="custom-template"  md-input-name="searchTimezoneField" 
+                 md-selected-item="vm.selectedTimezone" md-search-text="vm.searchTimezone"  
+                 md-no-cache="true" md-min-length="0"   placeholder="Timezone"
+                 md-menu-class="autocomplete-custom-template"
+                 md-selected-item-change="vm.itemSelectedtimezone(item)"
+                 md-menu-container-class="custom-container" 
+                 md-items="item in vm.timezonequery(vm.searchTimezone) " md-item-text="item.name"  required                   
+                 md-floating-label="Select a Timezone"  > <md-item-template >
+             <span md-highlight-text="vm.searchTimezone "
+                md-highlight-flags="^i"> {{item.name}}</span>    
+             </md-item-template>
+             <md-not-found>
+                 No matches found.
+            </md-not-found>
+            </md-autocomplete>
+                             
+            <md-input-container flex = "50">
+                <label>Select a Time</label>
+              
+                <md-select name="datetime" ng-model="vm.datetimecustomer" ng-change="vm.sheduletimezone(vm.datetimecustomer)"  required>
+              
+                    <md-option ng-value="datetime.time"   ng-repeat="datetime in vm.datetime">{{ datetime.time }}
+                        </md-option>
+                </md-select>
+                <div ng-messages="itemForm.Ratetype.$error" md-auto-hide="false">
+                    <p ng-message when="required">Required field</p>
+                </div>
+            </md-input-container>
+        </div>
+        <!-- <div Layout="row" style="font-size: 15px; font-weight: 500;"> Accounts</div> -->
+        <div Layout="row"   >
+     <md-input-container flex = "50">
+                                                    <label>Deposit to account</label>
+                                                    <md-select name="DepositAccountRef" ng-model="DepositAccountRef.value"  required>
+                                                        <md-option ng-value="account_name.Id" ng-repeat="account_name in vm.Accreceivable.items ">{{ account_name.Name}}&nbsp;&nbsp;&nbsp;{{ account_name.AccountType}}</md-option>
+                                                    </md-select>
+                                                    <div ng-messages="itemForm.DepositAccountRef.$error" md-auto-hide="false">
+                                                        <p ng-message when="required">Required field</p>
+                                                    </div>
+                                                </md-input-container>
+                                         <md-input-container flex = "50">
+                                             <label>Expense account</label>
+                                             <md-select name="ExpenseAccountRef" ng-model="ExpenseAccountRef.value"  required>
+                                                 <md-option ng-value="account_name.Id" ng-repeat="account_name in account_expense">{{ account_name.Name}}&nbsp;&nbsp;&nbsp;{{ account_name.AccountType}}</md-option>
+                                             </md-select>
+                                             <div ng-messages="itemForm.ExpenseAccountRef.$error" md-auto-hide="false">
+                                                 <p ng-message when="required">Required field</p>
+                                             </div>
+                                         </md-input-container>
+                                       
+                                        </div>
+                                        <div Layout="row"   >
+                                        <md-input-container flex = "50">
+                                                <label>Income account</label>
+                                               
+                                                <md-select name="IncomeAccountRef" ng-model="IncomeAccountRef.value"  required>
+                                                    <md-option ng-value="account_name.Id" ng-repeat="account_name in account_income">{{ account_name.Name}}&nbsp;&nbsp;&nbsp;{{ account_name.AccountType}}</md-option>
+                                                </md-select>
+                                                <div ng-messages="itemForm.IncomeAccountRef.$error" md-auto-hide="false">
+                                                    <p ng-message when="required">Required field</p>
+                                                </div>
+                                            </md-input-container>
+                                            <md-input-container flex = "50">
+                                                    <label>Assets account</label>
+                                                    <md-select name="AssetsAccountRef" ng-model="AssetAccountRef.value"  required>
+                                                        <md-option ng-value="account_name.Id" ng-repeat="account_name in account_asset">{{ account_name.Name}}&nbsp;&nbsp;&nbsp;{{ account_name.AccountType}}</md-option>
+                                                    </md-select>
+                                                    <div ng-messages="itemForm.IncomeAccountRef.$error" md-auto-hide="false">
+                                                        <p ng-message when="required">Required field</p>
+                                                    </div>
+                                                </md-input-container>
+                                        </div>
+                                       
+                                     
+       
+
+            <div class="md-padding" style="border:0px dotted; padding:2px;">
+            </div>                         
+            <div layout="row" layout-align="end end">
+                <div>
+                    <md-button class="md-primary md-raised " ng-disabled="vm.datetimecustomer == null || vm.selectedTimezone == null"
+                    style="text-transform:none !important" ng-click="vm.submit(); ">
+                    Save 
+                </md-button>
+                </div>
+                <div>
+                    <md-button class="md-primary md-raised " ng-disabled="vm.syncbutton == false"
+                    style="text-transform:none !important" ng-click="vm.forceSyncforQa()">Force Sync</md-button>
+                </div>
+                <div>
+                        
+            <md-button style="background-color: red; color: rgb(255,255,255);"
+            ng-show="!is_active"
+          class=" md-raised md-primary " 
+
+        ng-click="vm.poststatus1(true)">DeActivated
+
+        </md-button>
+        
+        <md-button 
+        ng-show="is_active" style="background-color: rgb(0,172,193); color: rgb(255,255,255);"
+       class=" md-raised md-secondary " 
+
+     ng-click="vm.poststatus1(false)">Activated
+
+     </md-button>
+    
+
+                </div>
+            </div>
+        </md-card>
+
+       <!-- </md-content> -->
+       </md-card>
+
+           
+    </div>
+   
+    

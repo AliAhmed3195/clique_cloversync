@@ -1,0 +1,183 @@
+<style>
+    #leftmenuidebar{
+         display: none;
+     }
+     #uppertoolbar{
+             display: none;
+         }
+         .layout-row > .flex-90 {
+     -ms-flex: 1 1 90%;
+     flex: 1 1 90%;
+     max-width: 60%;
+     max-height: 100%;
+     box-sizing: border-box;
+ }
+         md-card md-card-content {
+     display: block;
+      padding: 0px; 
+ }
+ .layout-fill {
+    margin: 0;
+    width: 100%;
+    min-height: 100%;
+    height: 100%;
+    margin-bottom: 50px;
+}
+.triangular-content > div {
+    overflow: hidden;
+}
+     </style>
+     <div  style="background: url(assets/images/backgrounds/registerbackground/loginbackground.jpg);background-size:cover;background-position: center">
+ <div>
+ 
+   
+ 
+     <div flex layout="row" layout-align="center center" layout-fill >
+         <md-card flex="90" class="tri-wizard-card md-whiteframe-z1 margin-bottom-100" tri-wizard style="margin-top: 100px;">
+             <md-toolbar class="md-primary">
+                 <div class="md-toolbar-tools" layout="row" layout-align="space-between center">
+                     <h2>Data Synchronization</h2>
+                 </div>
+                 <md-progress-linear class="md-accent padding-bottom-10" md-mode="determinate" ng-value="triWizard.progress"></md-progress-linear>
+             </md-toolbar>
+             <md-card-content>
+                 <md-tabs class="md-primary" layout-fill md-selected="triWizard.currentStep" md-dynamic-height>
+                     <md-tab id="account">
+                         <md-tab-label>
+                             <span class="oxy-step-label">1</span>
+                             <span translate>Your Time Selection</span>
+                         </md-tab-label>
+                         <md-tab-body   >
+                             <md-content class="md-padding" style = "background-color: white;">
+                                 <form name="accountForm" tri-wizard-form novalidate>
+                                     <div Layout="row">
+                                        <md-autocomplete flex="50" id="custom-template"  md-input-name="searchTimezoneField" 
+                                        md-selected-item-change="vm.itemSelected(item)"
+                                             md-selected-item="vm.selectedTimezone" md-search-text="vm.searchTimezone"  
+                                             md-no-cache="true" md-min-length="0"   placeholder="Timezone"
+                                             md-menu-class="autocomplete-custom-template" md-menu-container-class="custom-container" 
+                                             md-items="item in vm.timezonequery(vm.searchTimezone) " md-item-text="item.name"  required                   
+                                             md-floating-label="Select a Timezone"  > <md-item-template >
+                                         <span md-highlight-text="vm.searchTimezone "
+                                            md-highlight-flags="^i"> {{item.name}}</span>    
+                                         </md-item-template>
+                                         <md-not-found>
+                                             No matches found.
+                                        </md-not-found>
+                                        </md-autocomplete>
+                                                          
+                                         
+                              
+                                        <md-input-container flex="50"  style="width: 780px;">
+                                            <label>Time</label>
+                                      
+                                            <md-select name="datetime" ng-model="vm.datetimecustomer" ng-change="vm.sheduletimezone(vm.datetimecustomer)" style="min-width:170px;" required>
+                                          
+                                                <md-option ng-value="datetime.time" ng-repeat="datetime in vm.datetime">{{ datetime.time }}
+                                                    </md-option>
+                                            </md-select>
+                                            <div ng-messages="itemForm.Ratetype.$error" md-auto-hide="false">
+                                                <p ng-message when="required">Required field</p>
+                                            </div>
+                                        </md-input-container>
+                                         <!-- <div layout layout-xs="column" flex>
+                                     
+                                         </div> -->
+                                     </div>
+                                     
+                                     <div layout = "row" flex="100"> 
+                                        <!-- <md-input-container> -->
+                                                <!-- <md-datepicker flex="50" name="startDate" ng-model="vm.fromDate" md-placeholder="From date" ng-blur="vm.validateDate()" required>
+                                                </md-datepicker>
+                                                <div class="validation-messages" ng-messages="DateFilter.startDate.$error">
+                                                    <div ng-message="valid">Invalid Date</div>
+                                                    <div ng-message="required">date is required!</div>
+                                                </div> -->
+                                            <!-- </md-input-container> -->
+                                            <!-- <md-input-container> -->
+                                                <!-- <md-datepicker flex="50" name="endDate" ng-model="vm.toDate" md-placeholder="To date" md-min-date="minDate" md-max-date="maxDate" required>
+                                                </md-datepicker>
+                                                
+                                                <div class="validation-messages" ng-messages="DateFilter.endDate.$error">
+                                                    <div ng-message="valid">Invalid Date</div>
+                                                    <div ng-message="required">date is required!</div>
+                                                    <div ng-message="mindate">Year should be same as in From Date</div>
+                                                    <div ng-message="maxdate">Year should be same as in From Date</div>
+                                
+                                                </div>  -->
+                                            <!-- </md-input-container>      -->
+                                     </div>
+
+
+                                 </form>
+                             </md-content>
+                         </md-tab-body>
+                     </md-tab>
+                     <md-tab id="address" ng-disabled="accountForm.$invalid">
+                         <md-tab-label>
+                             <span class="oxy-step-label">2</span>
+                             <span translate>Accounts </span>
+                         </md-tab-label>
+                         <md-tab-body>
+                             <md-content class="md-padding" style = "background-color: white;">
+                                 <form name="addressForm" tri-wizard-form>
+                                     
+                                     <div flex layout="column">
+                                            <md-input-container >
+                                                    <label>Deposit to account</label>
+                                                    <md-select name="DepositAccountRef" ng-model="DepositAccountRef.value"  required>
+                                                        <md-option ng-value="account_name.Id" ng-repeat="account_name in vm.Accreceivable.items ">{{ account_name.Name}}&nbsp;&nbsp;&nbsp;{{ account_name.AccountType}}</md-option>
+                                                    </md-select>
+                                                    <div ng-messages="itemForm.DepositAccountRef.$error" md-auto-hide="false">
+                                                        <p ng-message when="required">Required field</p>
+                                                    </div>
+                                                </md-input-container>
+                                         <md-input-container >
+                                             <label>Expense account</label>
+                                             <md-select name="ExpenseAccountRef" ng-model="ExpenseAccountRef.value"  required>
+                                                 <md-option ng-value="account_name.Id" ng-repeat="account_name in account_expense">{{ account_name.Name}}&nbsp;&nbsp;&nbsp;{{ account_name.AccountType}}</md-option>
+                                             </md-select>
+                                             <div ng-messages="itemForm.ExpenseAccountRef.$error" md-auto-hide="false">
+                                                 <p ng-message when="required">Required field</p>
+                                             </div>
+                                         </md-input-container>
+                                         <md-input-container>
+                                             <label>Income account</label>
+                                             <!-- {{IncomeAccountRef.value}} -->
+                                             <md-select name="IncomeAccountRef" ng-model="IncomeAccountRef.value"  required>
+                                                 <md-option ng-value="account_name.Id" ng-repeat="account_name in account_income">{{ account_name.Name}}&nbsp;&nbsp;&nbsp;{{ account_name.AccountType}}</md-option>
+                                             </md-select>
+                                             <div ng-messages="itemForm.IncomeAccountRef.$error" md-auto-hide="false">
+                                                 <p ng-message when="required">Required field</p>
+                                             </div>
+                                         </md-input-container>
+                                         <md-input-container >
+                                             <label>Assets account</label>
+                                             <md-select name="AssetAccountRef" ng-model="AssetAccountRef.value"  required>
+                                                 <md-option ng-value="account_name.Id" ng-repeat="account_name in account_asset">{{ account_name.Name}}&nbsp;&nbsp;&nbsp;{{ account_name.AccountType}}</md-option>
+                                             </md-select>
+                                             <div ng-messages="itemForm.IncomeAccountRef.$error" md-auto-hide="false">
+                                                 <p ng-message when="required">Required field</p>
+                                             </div>
+                                         </md-input-container>
+                                       </div>
+                                      
+                                     
+                                 </form>
+                             </md-content>
+                         </md-tab-body>
+                     </md-tab>
+           
+              
+                 </md-tabs>
+             </md-card-content>
+             <md-card-actions layout="row" layout-align="end center">
+                    <md-button class="md-primary md-raised" ng-click="triWizard.prevStep()" ng-hide="triWizard.currentStep == 0" ng-disabled="triWizard.prevStepDisabled()" translate="Previous"></md-button>
+                    <md-button class="md-primary md-raised" ng-click="triWizard.nextStep()" ng-hide=" triWizard.currentStep == 1 " ng-disabled="vm.selectedTimezone == null || vm.selectedTimezone == undefined || vm.datetimecustomer == null || vm.datetimecustomer == undefined" translate="Next"></md-button>
+                    <md-button class="md-primary md-raised" ng-click="vm.submit()" ng-show=" triWizard.currentStep == 1 " ng-disabled="addressForm.$invalid" translate="Finish"></md-button>
+             </md-card-actions>
+        </md-card>
+            </div>
+        </div>
+ </div>
+ 
