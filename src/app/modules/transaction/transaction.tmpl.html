@@ -1,0 +1,128 @@
+
+<style>
+    h6 {
+        margin-bottom: 0rem;
+    margin-top: 0rem;
+    }
+    .datepicckerright
+    {
+        margin-right: 610px;
+    }
+    .searchbutton{
+        display: inline-block;
+    position: relative;
+    padding: 0px;
+    margin: 0px 0;
+    vertical-align: middle;
+    }
+</style>
+
+<div ng-show="vm.TransactionLoaded " class="loader padding-100" layout="column" layout-fill=""
+layout-align="center center">
+<md-progress-linear class="margin-bottom-20" md-mode="indeterminate" ng-show="vm.TransactionLoaded ==true ">
+</md-progress-linear>
+</div>     
+
+<div class="sales-dashboard" layout="column">
+    
+        <div layout="row" layout-xs="column" layout-margin>
+        
+            <tri-widget flex title="" content-layout="column" content-layout-align="center">
+                        <div layout="row" layout-xs="column" layout-align"center center" class="md-padding" style="padding-bottom:0px; margin-bottom: 0px;">
+                            <div flex>
+                                <!-- <md-input-container> -->
+                                    <md-datepicker name="startDate" ng-model="vm.fromDate" md-placeholder="From date" ng-blur="vm.validateDate()" required>
+                                    </md-datepicker>
+                                    <div class="validation-messages" ng-messages="DateFilter.startDate.$error">
+                                        <div ng-message="valid">Invalid Date</div>
+                                        <div ng-message="required">date is required!</div>
+                                    </div>
+                                <!-- </md-input-container> -->
+                            </div>
+                            <div flex>
+                                <!-- <md-input-container> -->
+                                    <md-datepicker name="endDate" ng-model="vm.toDate" md-placeholder="To date" md-min-date="minDate" md-max-date="maxDate" required>
+                                    </md-datepicker>
+                    
+                                    <div class="validation-messages" ng-messages="DateFilter.endDate.$error">
+                                        <div ng-message="valid">Invalid Date</div>
+                                        <div ng-message="required">date is required!</div>
+                                        <div ng-message="mindate">Year should be same as in From Date</div>
+                                        <div ng-message="maxdate">Year should be same as in From Date</div>
+                    
+                                    </div>
+                                <!-- </md-input-container> -->
+                            </div>
+                            <div flex="60">
+                                <md-input-container class = "searchbutton">
+                                    <md-button class="md-primary md-raised" ng-click="vm.getOrders();" ng-disabled="DateFilter.$invalid" >
+                                        Search
+                                        <md-icon md-font-icon="zmdi zmdi-search"></md-icon>
+                                    </md-button>
+                                </md-input-container>
+                            </div>
+                                    
+                        </div>
+                <form name="transactionSync" novalidate ng-submit="submit()">
+                <md-table-container>
+                   
+                    <table md-table class="md-data-table">
+                        <thead md-head md-order="vm.query.order" md-on-reorder="vm.Data">
+                            <tr md-row>
+                                <th md-column md-order-by="doc_number" decend-first> DocNumber </th>
+                                <th md-column md-order-by="order_id">Order id</th>
+                                <th md-column md-order-by="last_synced">Sync Date</th>
+                                <th md-column md-order-by="is_error">Error</th>
+                                <th md-column md-order-by="is_inv_created">Invoice Created</th>
+                                <th md-column md-order-by="Remarks">Retry</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody md-body>
+                           <!-- {{vm.Data}} -->
+                           <!-- | orderBy: vm.query.order | limitTo: vm.query.limit : (vm.query.page -1) * vm.query.limit -->
+                            <tr md-row ng-repeat="item in vm.Data | orderBy: vm.query.order | limitTo: vm.query.limit : (vm.query.page -1) * vm.query.limit" >
+                                <td md-cell>{{:: item.doc_number }}</td> 
+                                <!-- | amDateFormat:'MMMM Do YYYY, h:mm:ss a' -->
+                                <td md-cell>{{::item.order_id }}</td>
+                                <td md-cell>{{::item.timestamp  * 1000 | date:'MM/dd/yyyy'}}</td>
+                                <td md-cell>
+                                        <span    class="InActiveButton"   ng-if="item.is_error==false">
+                                                <i class="zmdi zmdi-minus-circle-outline" style="color: red;"></i>
+                                            </span>
+                                            <span    tooltip = "ali"   ng-if="item.is_error==true"  class="ActiveButton"  >
+                                                <i  class="zmdi zmdi-check-circle"  tooltip = "asss"  style="color: green;"></i>
+                                                <md-tooltip>Error : {{item.detail}}</md-tooltip>
+                                            </span> 
+                                    </td>
+                                <td md-cell >
+                                        <span    class="InActiveButton"   ng-if="item.is_inv_created==false">
+                                                <i class="zmdi zmdi-minus-circle-outline" style="color: red; margin-left: 30px;"></i>
+                                            </span>
+                                            <span       ng-if="item.is_inv_created==true"  class="ActiveButton"  >
+                                                <i class="zmdi zmdi-check-circle" style="color: green; margin-left: 30px;"></i>
+                                            </span> 
+
+
+                                </td>
+                                <!-- ng-disabled="item.is_error == false" -->
+                                <td md-cell class="col2">
+                                                   <md-button ng-hide="vm.processapi == false" ng-disabled="item.is_error == false " class="md-fab md-raised md-mini"  ng-click="vm.Retryorder(item)"> 
+                                                      <!-- <md-icon src="assets/images/backgrounds/download.png"  ></md-icon> -->
+                                                      <img  class="" src="assets/images/backgrounds/download.png" style="margin-top: 6px;">
+                                                     </md-button> 
+                                                </td>
+                                <td md-cell >
+                                 <div class="">
+                              
+                                </div>	
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </md-table-container>
+                <md-table-pagination md-limit="vm.query.limit" md-page="vm.query.page" md-total="{{vm.Data.length}}" md-page-select></md-table-pagination>
+                </form>
+            </tri-widget>
+        </div>
+    </div>
