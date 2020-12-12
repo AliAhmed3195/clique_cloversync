@@ -209,7 +209,7 @@
 
 
   /* @ngInject */
-  function runFunction($rootScope, Clique, $state, $location, $http) {
+  function runFunction($rootScope, Clique, $state, $location, $http, WizardModel) {
     var vm = this;
     // customer token 9c4f7039d8fc5117e92905642fa7f144ac66363f
     // admin token 82304a3318ef6fe6d58429a0301c2c5864a71c69
@@ -225,6 +225,12 @@
     $rootScope.$on('$destroy', function () {
       errorHandle();
     });
+
+
+
+    
+
+
 
     // count for messages
     // function getCount() {

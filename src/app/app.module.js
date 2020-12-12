@@ -18,6 +18,7 @@
             // https://github.com/Narzerus/angular-permission see here for why
             // uncomment above to activate the example seed module
             // 'seed-module',
+              'login',
               'wizard',
              'transaction',
               'settings',
